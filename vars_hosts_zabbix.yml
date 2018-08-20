@@ -1,0 +1,16 @@
+---
+
+zabbix_server: 192.168.51.100
+user: admin
+pass: zabbixPIA
+template: Template SNMP OS Linux
+srv_linux: Servidores Linux
+descricao: Servidores da NGSI
+
+# Nome dos servidores (esta lista é a que será enviada para o servidor de zabbix)
+
+host_add:
+ - { name: 'Cumarud',    hostname: 'cumarud.localdomain',    ip: '192.168.51.121' }
+ - { name: 'Agrestinad', hostname: 'agrestinad.localdomain', ip: '192.168.51.12' }
+ - { name: 'Timbaubad',  hostname: 'timbaubad.localdomain',  ip: '192.168.51.123' }
+ - { name: 'BezerrosD',  hostname: 'bezerrosd.localdomain',  ip: '192.168.51.132' }
