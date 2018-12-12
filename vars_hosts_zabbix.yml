@@ -1,16 +1,19 @@
 ---
-
-zabbix_server: 192.168.51.100
-user: admin
-pass: zabbixPIA
-template: Template SNMP OS Linux
-srv_linux: Servidores Linux
-descricao: Servidores da NGSI
+zabbix_server: 172.25.250.254
+user: Admin 
+pass: zabbix
+template1: Template App Zabbix Agent
+template2: Template OS Linux
+template3: Template OS Linux SNMPv2
+srv_linux: Linux servers
+descricao: Servidores da v4 do zabbix
+comunidade: hulk
 
 # Nome dos servidores (esta lista é a que será enviada para o servidor de zabbix)
-
 host_add:
- - { name: 'Cumarud',    hostname: 'cumarud.localdomain',    ip: '192.168.51.121' }
- - { name: 'Agrestinad', hostname: 'agrestinad.localdomain', ip: '192.168.51.12' }
- - { name: 'Timbaubad',  hostname: 'timbaubad.localdomain',  ip: '192.168.51.123' }
- - { name: 'BezerrosD',  hostname: 'bezerrosd.localdomain',  ip: '192.168.51.132' }
+ - { name: 'zabbixP',hostname: 'zabbixP.lab.zabbix.com',ip: '172.25.250.253' }
+ - { name: 'zabbixC1',hostname: 'zabbixC1.lab.zabbix.com',ip: '172.25.250.252' }
+ - { name: 'zabbixC2',hostname: 'zabbixC2.lab.zabbix.com',ip: '172.25.250.251' }
+ - { name: 'zabbixC3',hostname: 'zabbixC3.lab.zabbix.com',ip: '172.25.250.250' } 
+ - { name: 'arduino_1',hostname: 'arduino_1.lab.zabbix.com',ip: '192.168.51.133' }
+
