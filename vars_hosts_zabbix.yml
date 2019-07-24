@@ -1,5 +1,5 @@
 ---
-zabbix_server: 172.25.250.254
+zabbix_server: 10.104.32.10
 user: Admin 
 pass: zabbix
 template1: Template App Zabbix Agent

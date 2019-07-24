@@ -1,52 +1,53 @@
 ---
- - hosts: zabbixS
-   port: 22
-   vars_files:
-   - ./vars_hosts_zabbix.yml
+- hosts: servidor_zabbix
+  port: 22
+  vars_files:
+    - ./vars_hosts_zabbix.yml
+  tasks:
+    - name: Create new host
+      local_action:
+        module: zabbix_host
+        server_url: http://{{ zabbix_server }}/zabbix
+        login_user: "{{ user }}"
+        login_password: "{{ pass }}"
+        host_name: "{{ item.hostname }}"
+        visible_name: "{{ item.name }}"
+        description: "{{ descricao }}"
+        host_groups:
+        - "{{ srv_linux }}"
+        link_templates:
+        - "{{ template1 }}"
+        #- "{{ template2 }}"
+        - "{{ template3 }}"
+        status: enabled
+        state: present
+        inventory_mode: automatic
+        interfaces:
+        - type: 1
+          main: 1
+          useip: 1
+          ip: "{{ item.ip }}"
+          dns: "{{ item.hostname }}"
+          port: 10050
+        - type: 2
+          main: 1
+          useip: 1
+          ip: "{{ item.ip }}"
+          dns: "{{ item.hostname }}"
+          port: 161
+      delegate_to: localhost
+      with_items: "{{ host_add }}"
 
-   tasks:
-   - name: Create new host
-     local_action:
-       module: zabbix_host
-       server_url: http://{{ zabbix_server }}/zabbix
-       login_user: "{{ user }}"
-       login_password: "{{ pass }}"
-       host_name: "{{ item.hostname }}"
-       visible_name: "{{ item.name }}"
-       description: "{{ descricao }}"
-       host_groups:
-       - "{{ srv_linux }}"
-       link_templates:
-       - "{{ template1 }}"
-       #- "{{ template2 }}"
-       - "{{ template3 }}"
-       status: enabled
-       state: present
-       inventory_mode: automatic
-       interfaces:
-       - type: 1
-         main: 1
-         useip: 1
-         ip: "{{ item.ip }}"
-         dns: "{{ item.hostname }}"
-         port: 10050
-       - type: 2
-         main: 1
-         useip: 1
-         ip: "{{ item.ip }}"
-         dns: "{{ item.hostname }}"
-         port: 161
-     with_items: "{{ host_add }}"
-
-   - name: Create a new host macro or update an existing macro's value
-     local_action:
-       module: zabbix_hostmacro
-       server_url: http://{{ zabbix_server }}/zabbix
-       login_user: "{{ user }}"
-       login_password: "{{ pass }}"
-       host_name: "{{ item.hostname }}"
-       macro_name: SNMP_COMMUNITY
-       macro_value: "{{comunidade}}"
-       state: present
-     with_items: "{{ host_add }}"       
+    - name: Create a new host macro or update an existing macro's value
+      local_action:
+        module: zabbix_hostmacro
+        server_url: http://{{ zabbix_server }}/zabbix
+        login_user: "{{ user }}"
+        login_password: "{{ pass }}"
+        host_name: "{{ item.hostname }}"
+        macro_name: SNMP_COMMUNITY
+        macro_value: "{{comunidade}}"
+        state: present
+      delegate_to: localhost
+      with_items: "{{ host_add }}"       
 
