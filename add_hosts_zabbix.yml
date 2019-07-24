@@ -1,5 +1,5 @@
 ---
-- hosts: servidor_zabbix
+- hosts: localhost
   port: 22
   vars_files:
     - ./vars_hosts_zabbix.yml
