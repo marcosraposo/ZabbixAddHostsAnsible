@@ -4,7 +4,7 @@
   vars_files:
     - ./vars_hosts_zabbix.yml
   tasks:
-    - name: Create new host
+    - name: Create servidores Linux
       local_action:
         module: zabbix_host
         server_url: http://{{ zabbix_server }}/zabbix
@@ -12,13 +12,13 @@
         login_password: "{{ pass }}"
         host_name: "{{ item.hostname }}"
         visible_name: "{{ item.name }}"
-        description: "{{ descricao }}"
+        description: "{{ descricao_1 }}"
         host_groups:
         - "{{ srv_linux }}"
         link_templates:
-        - "{{ template1 }}"
-        #- "{{ template2 }}"
-        - "{{ template3 }}"
+        #- "{{ template1 }}"
+        - "{{ template2 }}"
+        #- "{{ template3 }}"
         status: enabled
         state: present
         inventory_mode: automatic
@@ -36,7 +36,60 @@
           dns: "{{ item.hostname }}"
           port: 161
       delegate_to: localhost
-      with_items: "{{ host_add }}"
+      with_items: "{{ maquinas_linux }}" 
+
+    - name: Criar maquina Windows
+      local_action:
+        module: zabbix_host
+        server_url: http://{{ zabbix_server }}/zabbix
+        login_user: "{{ user }}"
+        login_password: "{{ pass }}"
+        host_name: "{{ item.hostname }}"
+        visible_name: "{{ item.name }}"
+        description: "{{ descricao_2 }}"
+        host_groups:
+        - "{{ srv_windows }}"
+        link_templates:
+        #- "{{ template4 }}"
+        - "{{ template5 }}"
+        status: enabled
+        state: present
+        inventory_mode: automatic
+        interfaces:
+        - type: 1
+          main: 1
+          useip: 1
+          ip: "{{ item.ip }}"
+          dns: "{{ item.hostname }}"
+          port: 10050
+      delegate_to: localhost
+      with_items: "{{ maquinas_windows }}"
+
+    - name: Criar Appliances
+      local_action:
+        module: zabbix_host
+        server_url: http://{{ zabbix_server }}/zabbix
+        login_user: "{{ user }}"
+        login_password: "{{ pass }}"
+        host_name: "{{ item.hostname }}"
+        visible_name: "{{ item.name }}"
+        description: "{{ descricao_3 }}"
+        host_groups:
+        - "{{ srv_appliances }}"
+        link_templates:
+        - "{{ template6 }}"
+        status: enabled
+        state: present
+        inventory_mode: automatic
+        interfaces:
+        - type: 2
+          main: 1
+          useip: 1
+          ip: "{{ item.ip }}"
+          dns: "{{ item.hostname }}"
+          port: 161
+      delegate_to: localhost
+      with_items: "{{ appliances }}"
 
     - name: Create a new host macro or update an existing macro's value
       local_action:
@@ -49,5 +102,36 @@
         macro_value: "{{comunidade}}"
         state: present
       delegate_to: localhost
-      with_items: "{{ host_add }}"       
+      with_items: "{{ appliances }}"          
 
+    - name: Atualizando TLS
+      local_action:
+        module: zabbix_host
+        server_url: http://{{ zabbix_server }}/zabbix
+        login_user: "{{ user }}"
+        login_password: "{{ pass }}"
+        host_name: "{{ item.hostname }}"
+        visible_name: "{{ item.name }}"
+        host_groups:
+          - "{{ srv_linux }}"
+        tls_psk_identity: test
+        tls_connect: 2
+        tls_psk: 123456789abcdef123456789abcdef12      
+      delegate_to: localhost
+      with_items: "{{ maquinas_linux }}"          
+
+    - name: Atualizando TLS
+      local_action:
+        module: zabbix_host
+        server_url: http://{{ zabbix_server }}/zabbix
+        login_user: "{{ user }}"
+        login_password: "{{ pass }}"
+        host_name: "{{ item.hostname }}"
+        visible_name: "{{ item.name }}"
+        host_groups:
+          - "{{ srv_windows }}"
+        tls_psk_identity: test
+        tls_connect: 2
+        tls_psk: 123456789abcdef123456789abcdef12      
+      delegate_to: localhost
+      with_items: "{{ maquinas_windows}}"   

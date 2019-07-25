@@ -1,19 +1,41 @@
 ---
-zabbix_server: 10.104.32.10
+zabbix_server: 10.1.12.87
 user: Admin 
 pass: zabbix
+
+######################################################
 template1: Template App Zabbix Agent
 template2: Template OS Linux
 template3: Template OS Linux SNMPv2
 srv_linux: Linux servers
-descricao: Servidores da v4 do zabbix
-comunidade: hulk
+descricao_1: Servidores Linux
+maquinas_linux:
+ - { name: 'Linux_1',hostname: 'Linux_1.lab.zabbix.com',ip: '172.25.250.2' }
+ - { name: 'Linux_2',hostname: 'Linux_2.lab.zabbix.com',ip: '172.25.250.3' }
+ - { name: 'Linux_3',hostname: 'Linux_3.lab.zabbix.com',ip: '172.25.250.4' }
+ - { name: 'Linux_4',hostname: 'Linux_4.lab.zabbix.com',ip: '172.25.250.5' } 
+ - { name: 'Linux_5',hostname: 'Linux_5.lab.zabbix.com',ip: '172.25.250.6' }
 
-# Nome dos servidores (esta lista é a que será enviada para o servidor de zabbix)
-host_add:
- - { name: 'zabbixP',hostname: 'zabbixP.lab.zabbix.com',ip: '172.25.250.253' }
- - { name: 'zabbixC1',hostname: 'zabbixC1.lab.zabbix.com',ip: '172.25.250.252' }
- - { name: 'zabbixC2',hostname: 'zabbixC2.lab.zabbix.com',ip: '172.25.250.251' }
- - { name: 'zabbixC3',hostname: 'zabbixC3.lab.zabbix.com',ip: '172.25.250.250' } 
- - { name: 'arduino_1',hostname: 'arduino_1.lab.zabbix.com',ip: '192.168.51.133' }
+######################################################
+template4: Template App Zabbix Agent
+template5: Template OS Windows
+srv_windows: Templates/Operating systems
+descricao_2: Servidores Windows
+maquinas_windows:
+ - { name: 'Windows_1',hostname: 'windows_1.lab.zabbix.com',ip: '172.25.250.7' }
+ - { name: 'Windows_2',hostname: 'windows_2.lab.zabbix.com',ip: '172.25.250.8' }
+ - { name: 'Windows_3',hostname: 'windows_3.lab.zabbix.com',ip: '172.25.250.9' }
+ - { name: 'Windows_4',hostname: 'windows_4.lab.zabbix.com',ip: '172.25.250.10' } 
+ - { name: 'Windows_5',hostname: 'windows_5.lab.zabbix.com',ip: '172.25.250.11' }
 
+######################################################
+template6: Template Module Generic SNMPv2
+srv_appliances: Templates/Server hardware
+descricao_3: Servidores Appliances
+comunidade: 'minha_comunidade'
+appliances:
+ - { name: 'appliance_1',hostname: 'appliance_1.lab.zabbix.com',ip: '172.25.250.12' }
+ - { name: 'appliance_2',hostname: 'appliance_2.lab.zabbix.com',ip: '172.25.250.13' }
+ - { name: 'appliance_3',hostname: 'appliance_3.lab.zabbix.com',ip: '172.25.250.14' }
+ - { name: 'appliance_4',hostname: 'appliance_4.lab.zabbix.com',ip: '172.25.250.15' } 
+ - { name: 'appliance_5',hostname: 'appliance_5.lab.zabbix.com',ip: '172.25.250.16' }
